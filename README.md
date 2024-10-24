@@ -22,5 +22,16 @@
 >На собеседовании необходимо будет продемонстрировать экран, рассказать структуру и запустить тесты.
 > 
 > 
-> To start tests you should install : 
-> Appium 2.0
+# You should use for android testing :
+> Appium 2.0 with uiautomator driver installed
+> Android Gradle Plugin Version 7.4.2
+> Gradle version 8.9
+
+# To generate Allure report pls use  : 
+> ./gradlew allureReport --clean
+> ./gradlew allureServe
+
+# Appium tests location 
+> [NOTICE] You should build app module before tests execution
+> uitesting/src/test/java/com/alfatest/test/LoginTest.java
+> Device config file location : uitesting/src/test/resources/config.properties
