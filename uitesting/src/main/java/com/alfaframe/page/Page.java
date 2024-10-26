@@ -1,6 +1,7 @@
 package com.alfaframe.page;
 
 import com.alfaframe.DriverManager;
+import com.google.common.io.Files;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.sql.Timestamp;
 
 import javax.imageio.ImageIO;
 
+import io.qameta.allure.Attachment;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 
@@ -21,7 +23,7 @@ public class Page {
 
     private static String pathScreenshots = "./build/classes/screenshots/";
 
-    public static File makeScreenshot(){
+    private static File makeScreenshot(){
         Screenshot screenshot = new AShot().takeScreenshot(DriverManager.getMobileDriver().getWebDriver());
         if( ! java.nio.file.Files.exists(Paths.get(pathScreenshots))) {
             try {
@@ -38,5 +40,15 @@ public class Page {
             e.printStackTrace();
         }
         return currentScreenshot;
+    }
+
+    @Attachment(type = "image/png")
+    public static byte[] attachAllureScreenshot() {
+        File screenshot = makeScreenshot();
+        try {
+            return screenshot == null ? null : Files.toByteArray(screenshot);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
