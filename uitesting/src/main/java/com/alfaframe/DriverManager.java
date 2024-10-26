@@ -29,11 +29,15 @@ public class DriverManager {
         }
     }
 
-    public static GlobalDriver getMobileDriver() {
-        if (null == defaultMobileDriver.get()) {
+    public static GlobalDriver getMobileDriver(boolean useNewDriver) {
+        if (null == defaultMobileDriver.get() || useNewDriver) {
             getNewDriver(Platform.valueOf(GlobalConfig.getInstance().getPlatformName()));
         }
         return defaultMobileDriver.get();
+    }
+
+    public static GlobalDriver getMobileDriver(){
+        return getMobileDriver(false);
     }
 
     public static GlobalDriver getNewDriver(Platform platform) {
@@ -80,8 +84,7 @@ public class DriverManager {
         LOGGER.debug("Trying to close browser (driver.quit()): " + driver);
         try {
             if (driver != null) {
-                //driver.close();
-                driver.quit();
+                driver.close();
                 drivers.remove(driver);
             }
         } catch (WebDriverException exc) {
