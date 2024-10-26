@@ -24,24 +24,21 @@ configurations {
         canBeConsumed = true
     }
 }
-//
+
 dependencies {
     implementation group: 'org.testng', name: 'testng', version: '7.10.2'
     agent "org.aspectj:aspectjweaver:$aspectJVersion"
-//    runtimeOnly group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.22'
     testImplementation 'io.qameta.allure:allure-testng:2.29.0'
     testImplementation platform("io.qameta.allure:allure-bom:$allureVersion")
-    testImplementation 'org.mockito:mockito-core:5.3.1'
     // https://mvnrepository.com/artifact/io.appium/java-client
     implementation group: 'io.appium', name: 'java-client', version: '9.3.0'
     compileOnly 'org.projectlombok:lombok:1.18.34'
     annotationProcessor 'org.projectlombok:lombok:1.18.34'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.17.0'
-// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.25.0'
-//    testImplementation "org.slf4j:slf4j-simple:2.0.12"
-    implementation 'org.slf4j:slf4j-simple:2.0.7'
+    implementation 'org.slf4j:slf4j-simple:2.0.12'
     // https://mvnrepository.com/artifact/ru.yandex.qatools.ashot/ashot
     implementation group: 'ru.yandex.qatools.ashot', name: 'ashot', version: '1.5.4'
 
@@ -58,19 +55,3 @@ test {
     }
     ignoreFailures = true
 }
-
-
-//allure {
-//    version = '2.17.3'
-//    aspectjweaver = true
-//}
-
-//test {
-//    jvmArgs = [ "-javaagent:${configurations.agent.singleFile}" ]
-//}
-//tasks.withType(Test){
-//    useTestNG()
-//    testLogging {
-//        events "passed", "skipped", "failed"
-//    }
-//}
