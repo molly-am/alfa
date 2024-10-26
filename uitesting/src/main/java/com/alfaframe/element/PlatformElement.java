@@ -65,7 +65,7 @@ public class PlatformElement extends Element{
     }
 
     public String getAttribute(String attr){
-        LOGGER.info("Get attribute : " + attr + " for locator " + foundBy);
+        LOGGER.info("Get attribute value with key : [" + attr + "] for locator " + foundBy);
         return driver.findElement(foundBy).getAttribute(attr);
     }
 

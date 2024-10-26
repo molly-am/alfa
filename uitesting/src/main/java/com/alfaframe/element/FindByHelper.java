@@ -9,10 +9,6 @@ public class FindByHelper {
 
     public static String getLocatorFieldName(By by)
     {
-        if(by instanceof By.ByCssSelector)
-        {
-            return "cssSelector";
-        }
         if(by instanceof By.ById)
         {
             return "id";
@@ -36,6 +32,12 @@ public class FindByHelper {
         if(by instanceof By.ByXPath)
         {
             return "xpathExpression";
+        }
+        if(by instanceof AppiumBy.ByAndroidUIAutomator){
+            return "androidUIAutomator";
+        }
+        if(by instanceof AppiumBy.ByClassName){
+            return "className";
         }
         throw new RuntimeException("Method format is not available for " + by.toString());
     }

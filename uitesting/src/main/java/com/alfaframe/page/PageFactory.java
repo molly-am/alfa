@@ -109,21 +109,20 @@ public class PageFactory {
             String accessibility = annotation.accessibility();
             String uiAutomator = annotation.uiAutomator();
             String tagName = annotation.tagName();
+            String className = annotation.className();
             if (!id.isEmpty()) {
                 by = AppiumBy.id(id);
             } else if (!xpath.isEmpty()) {
                 by = AppiumBy.xpath(xpath);
-            }
-            else if (!accessibility.isEmpty()) {
+            } else if (!accessibility.isEmpty()) {
                 by = AppiumBy.accessibilityId(accessibility);
-            }
-            else if (!uiAutomator.isEmpty()) {
+            } else if (!uiAutomator.isEmpty()) {
                 by = AppiumBy.androidUIAutomator(uiAutomator);
-            }
-            else if (!tagName.isEmpty()) {
+            } else if (!tagName.isEmpty()) {
                 by = AppiumBy.androidViewTag(tagName);
+            } else if (!className.isEmpty()) {
+                by = AppiumBy.className(className);
             }
-
         }
         return by;
     }
@@ -140,6 +139,7 @@ public class PageFactory {
             String className = annotation.className();
             String name = annotation.name();
             String type = annotation.type();
+            String androidUIAutomator = annotation.androidUIAutomator();
 
             if (!id.isEmpty()) {
                 by = By.id(id);
@@ -166,6 +166,9 @@ public class PageFactory {
             }
             else if (!type.isEmpty()) {
                 by = (By.xpath(String.format("//*[@type='%s']", type)));
+            }
+            else if (!androidUIAutomator.isEmpty()) {
+                by = (AppiumBy.androidUIAutomator(androidUIAutomator));
             }
         }
         return by;

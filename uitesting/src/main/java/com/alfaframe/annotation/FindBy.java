@@ -23,4 +23,6 @@ public @interface FindBy {
     String name() default "";
 
     String type() default "";
+
+    String androidUIAutomator() default "";
 }
