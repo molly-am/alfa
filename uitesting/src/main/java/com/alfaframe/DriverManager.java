@@ -84,7 +84,7 @@ public class DriverManager {
         LOGGER.debug("Trying to close browser (driver.quit()): " + driver);
         try {
             if (driver != null) {
-                driver.close();
+                driver.quit();
                 drivers.remove(driver);
             }
         } catch (WebDriverException exc) {

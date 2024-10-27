@@ -7,36 +7,29 @@ import io.appium.java_client.AppiumBy;
 
 public class FindByHelper {
 
-    public static String getLocatorFieldName(By by)
-    {
-        if(by instanceof By.ById)
-        {
+    public static String getLocatorFieldName(By by) {
+        if (by instanceof By.ById) {
             return "id";
         }
-        if(by instanceof By.ByLinkText)
-        {
+        if (by instanceof By.ByLinkText) {
             return "linkText";
         }
-        if(by instanceof By.ByName)
-        {
+        if (by instanceof By.ByName) {
             return "name";
         }
-        if(by instanceof By.ByPartialLinkText)
-        {
+        if (by instanceof By.ByPartialLinkText) {
             return "partialLinkText";
         }
-        if(by instanceof By.ByTagName)
-        {
+        if (by instanceof By.ByTagName) {
             return "tagName";
         }
-        if(by instanceof By.ByXPath)
-        {
+        if (by instanceof By.ByXPath) {
             return "xpathExpression";
         }
-        if(by instanceof AppiumBy.ByAndroidUIAutomator){
+        if (by instanceof AppiumBy.ByAndroidUIAutomator) {
             return "androidUIAutomator";
         }
-        if(by instanceof AppiumBy.ByClassName){
+        if (by instanceof AppiumBy.ByClassName) {
             return "className";
         }
         throw new RuntimeException("Method format is not available for " + by.toString());

@@ -15,9 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alfaframe.annotation.FindBy;
-import com.alfaframe.element.Element;
 import com.alfaframe.element.MobileElement;
-import com.alfaframe.element.PlatformElement;
+import com.alfaframe.element.Element;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
 import io.appium.java_client.AppiumBy;
@@ -70,7 +69,7 @@ public class PageFactory {
                         FindBy elementAnnotation = field.getAnnotation(FindBy.class);
                         By by = setFindByToElement(elementAnnotation);
                         field.setAccessible(true);
-                        field.set(page, createList(driver, page.getClass().getClassLoader(), by, (Class<Element>) listElementClass));
+                        field.set(page, createList(driver, page.getClass().getClassLoader(), by, (Class< Element>) listElementClass));
 
                     }
                 }
@@ -90,7 +89,7 @@ public class PageFactory {
                             By by = setFindByToElement(annotation);
                             Constructor<?> fieldConstructor = fieldClass.getConstructor(GlobalDriver.class, By.class);
                             field.setAccessible(true);
-                            PlatformElement element = (PlatformElement) fieldConstructor.newInstance(driver, by);
+                            Element element = (Element) fieldConstructor.newInstance(driver, by);
                             FieldUtils.writeField(element, "name", field.getName(), true);
                             field.set(page, element);
                         }

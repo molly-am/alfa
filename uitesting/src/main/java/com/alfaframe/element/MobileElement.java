@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 
 import io.appium.java_client.AppiumBy;
 
-public class MobileElement extends PlatformElement {
+public class MobileElement extends Element {
 
     private By notFormatedBy;
     protected GlobalDriver driver;

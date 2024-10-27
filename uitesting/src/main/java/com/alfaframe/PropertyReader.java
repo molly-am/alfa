@@ -54,6 +54,12 @@ public class PropertyReader {
             String key = "";
             if(pr.getKey().toString().equals("udid")
                     || pr.getKey().toString().equals("deviceName")
+                    || pr.getKey().toString().equals("newCommandTimeout")
+                    || pr.getKey().toString().equals("waitForSelectorTimeout")
+                    || pr.getKey().toString().equals("ignoreUnimportantViews")
+                    || pr.getKey().toString().equals("waitForIdleTimeout")
+                    || pr.getKey().toString().equals("autoGrantPermissions")
+                    || pr.getKey().toString().equals("instrumentApp")
                     || pr.getKey().toString().equals("appActivity")
                     || pr.getKey().toString().equals("appPackage")
                     || pr.getKey().toString().equals("noReset")

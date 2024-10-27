@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.alfaframe.element.PlatformElement;
+import com.alfaframe.element.Element;
 
 public class CustomInvocationHandler implements InvocationHandler {
 
@@ -29,10 +29,10 @@ public class CustomInvocationHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         List<WebElement> elements = driver.getWebDriver().findElements(locator);
-        List<PlatformElement> customs = new ArrayList<>();
-        for (int el = 0; el < elements.size(); el++) {
+        List<Element> customs = new ArrayList<>();
+        for (int element = 0; element < elements.size(); element++) {
             Constructor<?> fieldConstructor = clazz.getConstructor(GlobalDriver.class, By.class);
-            customs.add((PlatformElement) fieldConstructor.newInstance(driver, locator));
+            customs.add((Element) fieldConstructor.newInstance(driver, locator));
         }
         try {
             return method.invoke(customs, args);
