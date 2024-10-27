@@ -1,89 +1,133 @@
 package com.alfatest.page;
 
 import com.alfaframe.DriverManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.alfaframe.Platform;
 import com.alfaframe.element.MobileElement;
-import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
-import ru.yandex.qatools.ashot.AShot;
-import ru.yandex.qatools.ashot.Screenshot;
-
 import com.alfaframe.page.Page;
 import com.alfaframe.page.PageFactory;
-import com.google.common.io.Files;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.sql.Timestamp;
-
-import javax.imageio.ImageIO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import io.qameta.allure.Step;
 
 public class LoginPage extends Page {
 
-//    @AndroidFindBy(xpath = "//*[contains(@text, 'Alfa')]")
-//    private MobileElement title;
-
-    @AndroidFindBy(id = "tvTitle")
+    @AndroidFindBy(xpath = "//*[contains(@resource-id, 'tvTitle')]")
+    @iOSXCUITFindBy(xpath = "")
     private MobileElement title;
 
-    @AndroidFindBy(id = "etPassword")
+    @AndroidFindBy(id = "etUsername")
+    @iOSXCUITFindBy(id = "")
+    private MobileElement loginField;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceIdMatches(\".*etPassword\")")
+    @iOSXCUITFindBy(id = "")
     private MobileElement passwordField;
 
-    @AndroidFindBy(id = "text_input_end_icon")
+    @AndroidFindBy(className = "android.widget.ImageButton")
+    @iOSXCUITFindBy(id = "")
     private MobileElement showPasswordButton;
+
+    @AndroidFindBy(id = "btnConfirm")
+    private MobileElement loginButton;
+
+    @AndroidFindBy(id = "tvError")
+    private MobileElement invalidUserDataError;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ProgressBar\")")
+    private MobileElement progressBar;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
 
     public LoginPage() {
-        PageFactory.initElements(DriverManager.getNewDriver(Platform.ANDROID), this);
+        PageFactory.initElements(DriverManager.getMobileDriver(true), this);
     }
 
     @Step("Login page was opened!")
-    public boolean isElementPresent(){
-        return title.isElementPresent(10);
+    public boolean isOpened(long timeout){
+        LOGGER.info("Check page is opened...");
+        return title.isElementPresent(timeout);
     }
 
-    @Step("Get title text")
+    @Step("Get title value")
     public String getTitle(){
-        attachScreen(makeScreenshot());
+        LOGGER.info("Get title value...");
+        attachAllureScreenshot();
         return title.getText();
     }
 
-    @Step("Type text : {text}")
-    public void type(String text){
-        passwordField.type(text);
+    @Step("Type password : {value}")
+    public void typePassword(String value, boolean useKeyboard){
+        passwordField.click();
+        if (useKeyboard) {
+            LOGGER.info("Type " + value + " via keyboard ...");
+            passwordField.typeViaKeyboard(value);
+        } else {
+            LOGGER.info("Paste " + value + "...");
+            passwordField.type(value);
+        }
+        attachAllureScreenshot();
+    }
+
+    @Step("Paste 'Login' value: {value}")
+    public void typeLogin(String value, boolean useKeyboard){
+        if (useKeyboard) {
+            LOGGER.info("Type " + value + " via keyboard ...");
+            loginField.typeViaKeyboard(value);
+        } else {
+            LOGGER.info("Paste" + value + " ...");
+            loginField.type(value);
+        }
+        attachAllureScreenshot();
+    }
+
+    @Step("Get 'Login' field value")
+    public String getLoginText(){
+        attachAllureScreenshot();
+        return loginField.getText();
     }
 
     @Step("Get password field value")
     public String getPasswordFieldText(){
+        attachAllureScreenshot();
         return passwordField.getText();
     }
 
-    @Step("Check is Password masked")
+    @Step("Check is 'Password' field masked")
     public boolean isPasswordMasked(){
-        attachScreen(makeScreenshot());
+        attachAllureScreenshot();
         return Boolean.parseBoolean(passwordField.getAttribute("password"));
     }
 
-    @Step("Tap Show button")
+    @Step("Click 'Show button'")
     public void clickShowPasswordButton(){
-        attachScreen(makeScreenshot());
+        attachAllureScreenshot();
         showPasswordButton.click();
     }
 
-    @Attachment(type = "image/png")
-    public static byte[] attachScreen(File screenshot) {
-        try {
-            return screenshot == null ? null : Files.toByteArray(screenshot);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    @Step("Check is 'Show button' enabled")
+    public boolean isShowPasswordButtonEnabled(){
+        attachAllureScreenshot();
+        return Boolean.parseBoolean(showPasswordButton.getAttribute("checked"));
     }
 
+    @Step("Click 'Login' button")
+    public void clickLoginButton(){
+        attachAllureScreenshot();
+        loginButton.click();
+    }
+
+    @Step("Verify user sees error message")
+    public String getErrorMessage(long timeout){
+        progressBar.waitForPageLoad(5);
+        attachAllureScreenshot();
+        return invalidUserDataError.getText();
+    }
+
+    @Step("Get error message")
+    public boolean isErrorMessagePresent(long timeout){
+        progressBar.waitForPageLoad(5);
+        attachAllureScreenshot();
+        return invalidUserDataError.isElementPresent(timeout);
+    }
 }
